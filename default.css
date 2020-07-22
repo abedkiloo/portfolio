@@ -66,10 +66,10 @@ h6 { font-size: 16px;}
 .intro-wrapper{
 	background-color: var(--secondaryColor);
 	border: 1px solid var(--borderColor);
-	-webkit-box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
+	/*-webkit-box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
 	-moz-box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
 	box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
-
+*/
 	border-radius: 5px 5px 0 0;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -89,6 +89,15 @@ h6 { font-size: 16px;}
 	align-content: center;
 	/*border: 1px solid Lightcoral;*/
 	background-color: var(--mainColor);
+}
+#navigation {
+	margin: 0px;
+	padding: 10px;
+}
+#navigation li{
+	display: inline-block;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 .dots-wrapper{
 	 display: flex;
