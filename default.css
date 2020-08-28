@@ -10,6 +10,10 @@
 	--secondaryText:#4b5156;
 
 	--themeDotBorder:#24292e;
+
+	--previewBg:rgb(251, 249, 243, 0.8);
+
+	--previewShadow: #f0ead6;
 }
 html,body{
 	padding:0;
@@ -67,20 +71,22 @@ h6 { font-size: 16px;}
 }
 .intro-wrapper{
 	background-color: var(--secondaryColor);
-	border: 1px solid var(--borderColor);
-	/*-webkit-box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
-	-moz-box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
-	box-shadow: 35px 61px 48px 17px rgba(0,0,0,0.72);
-*/
-	border-radius: 5px 5px 0 0;
+	border:1px solid var(--borderColor);
+	border-radius:5px 5px 0 0;
+
+
+	-webkit-box-shadow: -1px 1px 3px -1px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 1px 3px -1px rgba(0,0,0,0.75);
+	box-shadow: -1px 1px 3px -1px rgba(0,0,0,0.75);
+
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-/*	grid-template-rows:3em 30em;
-*/	grid-template-areas:  
+	grid-template-areas: 
 		'nav-wrapper nav-wrapper'
 		'left-column right-column'
-		;
+	;
 }
+
 .nav-wrapper{
 	grid-area: nav-wrapper;
 	border-radius: 5px 5px 0 0;
@@ -152,14 +158,17 @@ h6 { font-size: 16px;}
 .theme-dot:hover{
 	border-width: 5px;
 }
+#light-mode{
+	background-color: #fff;
+}
 #blue-mode{
 	background-color: #192734;
 }
 #green-mode{
-	background-color: #78866b ;
+	background-color: #78866b;
 }
 #purple-mode{
-	background-color: #7E4C4 ;
+	background-color: #7E4C4;
 }
 #settings-note{
 	 font-size: 12px;
@@ -172,15 +181,70 @@ h6 { font-size: 16px;}
 }
 #preview{
 	width: 300px;
-	border: 1.5 solid #17a2b8;
+	border: 1.5px solid #17a2b8;
+	background-color: var(--previewBg);
+	padding: 15px;
+	position: relative;
+}
+#preview-shadow{
+	background-color:  var(--previewShadow);
+	width: 300px;
+	height: 180px; 
+	padding-top: 30px;
+	padding-left: 30px;
+}
+.corner{
+	height: 7px;
+	width: 7px;
+	border-radius:50%;
+	border: 1.5px solid #17a2b8;
+	background-color: #fff;
+	position: absolute;
+}
+#corner-tl{
+	top: -5px;
+	left: -5px;
+}
+#corner-tr{
+	top: -5px;
+	right: -5px;
+}
+#corner-bl{
+	bottom: -5px;
+	left: -5px;
+}
+#corner-br{
+	bottom: : -5px;
+	right: -5px;
 }
 
 .right-column{
 	grid-area: right-column;
+	display: grid;
+	align-content: center;
+
+	padding-top: 50px;
+	padding-bottom: 50px;
 	/*border: 1px solid Lightcoral;*/
 }
 @media screen and (max-width: 1200px){
 	.main-container{
 		width: 95%; 
 	}
+}
+
+@media screen and (max-width: 800px){
+	.intro-wrapper{
+		display: grid;
+		grid-template-columns: 1fr ;
+		grid-template-areas: 
+			'nav-wrapper'
+			'left-column'
+			'right-column'
+		;
+	}
+	.right-column{
+		justify-content: center;
+	}
+
 }
