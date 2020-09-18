@@ -1,0 +1,14 @@
+{
+  "name": "abedkiloo_portofolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive"
+  },
+  "author": "abedkiloo",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "node-sass": "^4.14.1"
+  }
+}
