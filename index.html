@@ -1,0 +1,195 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <span class="brand">Abednego Kilonzo</span>
+      <nav>
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact-info">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section id="about" class="about-section">
+      <div class="about-container">
+        <div class="about-image">
+          <img src="images/profile.png" alt="Profile" class="profile">
+        </div>
+        <div class="about-content">
+          <h2 class="about-title">About Me</h2>
+          <p class="about-summary">Passionate and seasoned Software Engineer with 6+ years of experience developing web applications and backend systems across fintech, legal-tech, medical-tech, and agric-tech. Skilled at writing, testing, and maintaining scalable, adaptable code. Experienced in both small and large teams, and able to work independently in remote and hybrid environments.</p>
+          <div class="about-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">PHP</span>
+            <span class="tag">Laravel</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">React</span>
+            <span class="tag">Docker</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="expertise" class="expertise-section">
+      <h2 class="section-title">Technical Expertise</h2>
+      <div class="expertise-grid">
+        <div class="expertise-card">
+          <h3>Web Frameworks</h3>
+          <p>Extensive mastery of Django and Django Rest (4+ years), along with proficiency in Laravel/Lumen (3+ years) and PHP (3+ years).</p>
+        </div>
+        <div class="expertise-card">
+          <h3>Database Management</h3>
+          <p>Adept at handling diverse databases, including MySQL (4+ years), PostgreSQL (2+ years), and MSSQL (1+ year).</p>
+        </div>
+        <div class="expertise-card">
+          <h3>CI/CD</h3>
+          <p>Skilled in streamlining development processes with Docker (1+ year) and Azure (1+ year) for enhanced project efficiency.</p>
+        </div>
+        <div class="expertise-card">
+          <h3>Mobile Development</h3>
+          <p>2+ years of experience in Android development, creating comprehensive mobile solutions.</p>
+        </div>
+        <div class="expertise-card">
+          <h3>Front-end Technologies</h3>
+          <p>Proficient in React (1+ year) and VueJS (1+ year), with full-stack development capabilities.</p>
+        </div>
+      </div>
+    </section>
+    <section id="skills" class="skills-section">
+      <h2 class="section-title">Technical Skills & Stack</h2>
+      <p class="skills-intro">My diverse skill set spans across various technologies and tools, allowing me to deliver comprehensive solutions for complex problems.</p>
+      <div class="skills-grid">
+        <div class="skills-card">
+          <h4>Languages</h4>
+          <div class="tag-row"><span class="tag">Python</span><span class="tag">PHP</span></div>
+        </div>
+        <div class="skills-card">
+          <h4>Frameworks</h4>
+          <div class="tag-row"><span class="tag">Django</span><span class="tag">Django Rest</span><span class="tag">Spring</span><span class="tag">Spring Boot</span><span class="tag">React JS</span><span class="tag">Laravel</span><span class="tag">Lumen</span></div>
+        </div>
+        <div class="skills-card">
+          <h4>Databases</h4>
+          <div class="tag-row"><span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">MSSQL</span><span class="tag">SQL</span></div>
+        </div>
+        <div class="skills-card">
+          <h4>Application Development</h4>
+          <div class="tag-row"><span class="tag">Android</span><span class="tag">Mobile Development</span></div>
+        </div>
+        <div class="skills-card">
+          <h4>Server Management</h4>
+          <div class="tag-row"><span class="tag">Linux/Unix</span><span class="tag">Server Configuration</span><span class="tag">DevOps</span></div>
+        </div>
+        <div class="skills-card">
+          <h4>CI/CD</h4>
+          <div class="tag-row"><span class="tag">Docker</span><span class="tag">Docker Swarm</span><span class="tag">Kubernetes</span><span class="tag">Continuous Integration</span></div>
+        </div>
+        <div class="skills-card">
+          <h4>Front-end</h4>
+          <div class="tag-row"><span class="tag">React</span><span class="tag">VueJS</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
+        </div>
+      </div>
+    </section>
+    <section id="projects" class="projects-section">
+      <h2 class="section-title">My Projects</h2>
+      <p class="projects-intro">Here are some of the key projects I've worked on throughout my career. Each project demonstrates my technical skills and problem-solving abilities.</p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x180.png?text=USSD+Banking+Solution" alt="USSD Banking Solution" class="project-img">
+          <h3>USSD Banking Solution</h3>
+          <p>Developed and implemented first in-house USSD application running in 5 subsidiaries for Equity Bank, allowing customers to perform banking transactions via mobile phones.</p>
+          <div class="about-tags">
+            <span class="tag">Django</span><span class="tag">Python</span><span class="tag">API</span><span class="tag">Banking</span>
+          </div>
+          <a href="#" class="button-secondary">View Project</a>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x180.png?text=Billing+Engine" alt="Billing Engine" class="project-img">
+          <h3>Billing Engine</h3>
+          <p>Reviewed and enhanced a Billing Engine for Equity Bank, streamlining customer interactions and enhancing the overall billing process through automation.</p>
+          <div class="about-tags">
+            <span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Payment Integration</span>
+          </div>
+          <a href="#" class="button-secondary">View Project</a>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x180.png?text=API+Gateway" alt="API Gateway" class="project-img">
+          <h3>API Gateway</h3>
+          <p>Participated in building an API Gateway used by WebKul, Shopify, ERP Next, and more, creating a unified interface for multiple services.</p>
+          <div class="about-tags">
+            <span class="tag">Django REST</span><span class="tag">API Design</span><span class="tag">Microservices</span>
+          </div>
+          <a href="#" class="button-secondary">View Project</a>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:2rem;">
+        <a href="https://github.com/abedkiloo" class="button-primary">View More on GitHub</a>
+      </div>
+    </section>
+    <section id="publications">
+      <h2>Publications</h2>
+      <ul>
+        <li><a href="https://medium.com/analytics-vidhya/python-web-scrapping-requests-html-not-beautiful-soup-27eb95286ffe" style="color: #CC9966;">@https://medium.com/analytics-vidhya/python-web-scrapping-requests-html-not-beautiful-soup-27eb95286ffe</a></li>
+        <li><a href="https://medium.com/@abedxh/user-session-in-android-4d8f937c966a" style="color: #CC9966;">https://medium.com/@abedxh/user-session-in-android-4d8f937c966a</a></li>
+        <li><a href="https://medium.com/analytics-vidhya/db-transaction-the-laravel-sweet-hack-00-ded131b71ec9" style="color: #CC9966;">@https://medium.com/analytics-vidhya/db-transaction-the-laravel-sweet-hack-00-ded131b71ec9</a></li>
+        <li><a href="https://medium.com/analytics-vidhya/crud-using-spring-boot-part-1-without-db-385a48e8578b" style="color: #CC9966;">@https://medium.com/analytics-vidhya/crud-using-spring-boot-part-1-without-db-385a48e8578b</a></li>
+        <li><a href="https://medium.com/@abedxh/deploy-laravel-5-4-project-in-ubuntu-16-04-apache-based-server-538d4620bb97" style="color: #CC9966;">https://medium.com/@abedxh/deploy-laravel-5-4-project-in-ubuntu-16-04-apache-based-server-538d4620bb97</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Abednego Kilonzo. All rights reserved.</p>
+  </footer>
+</body>
+</html>
